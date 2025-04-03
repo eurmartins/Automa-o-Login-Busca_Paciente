@@ -37,11 +37,6 @@ pip install requests
 - Acessa paginas importantes para servicos medicos e faturamento.
 - Busca um paciente especifico e verifica se foi encontrado.
 
-## Observacoes Importantes
-- O script contem credenciais sensiveis. **Nao compartilhe suas credenciais publicamente.**
-- Verifique se o site alvo nao bloqueia acessos repetitivos automatizados.
-- Para garantir seguranca, utilize metodos de armazenamento seguro para credenciais (como variaveis de ambiente).
-
 ## Contatos
 Email: victormartinssantos.work@gmail.com
 
