@@ -6,6 +6,7 @@ HOME_URL = "https://saude.sulamericaseguros.com.br/prestador/"
 SERVICOS_MEDICOS_URL = "https://saude.sulamericaseguros.com.br/prestador/servicos-medicos/"
 FATURAMENTO_URL = "https://saude.sulamericaseguros.com.br/prestador/servicos-medicos/contas-medicas/faturamento-tiss-3/faturamento/"
 GUIA_CONSULTA_URL = "https://saude.sulamericaseguros.com.br/prestador/servicos-medicos/contas-medicas/faturamento-tiss-3/faturamento/guia-de-consulta/"
+BUSCA_PACIENTE_URL = "https://saude.sulamericaseguros.com.br/prestador/servicos-medicos/contas-medicas/faturamento-tiss-3/faturamento/guia-de-consulta/guia-de-consulta-incluir.htm"
 
 payload = {
     "codigoIndentificacao": "100000009361",
@@ -18,8 +19,10 @@ payload_busca = {
 }
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    "Content-Type: application/json"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Content-Type": "application/json",
+    "Referer": "https://saude.sulamericaseguros.com.br/prestador/servicos-medicos/contas-medicas/faturamento-tiss-3/faturamento/guia-de-consulta/",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
 }
 
 session = requests.Session()
@@ -41,11 +44,9 @@ for pagina in paginas:
         print(f"Erro ao acessar {pagina}")
         exit()
 
-print("Cookies armazenados:", session.cookies.get_dict())
+response = session.post(BUSCA_PACIENTE_URL, data=payload_busca, headers=headers, cookies=session.cookies)
 
-response = session.post(GUIA_CONSULTA_URL, json=payload_busca, headers=headers, cookies=session.cookies)
-
-if response.status_code == 200 and "Paciente encontrado" in response.text:
+if response.status_code == 200 and "Portal" in response.text:
     print("Paciente localizado com sucesso!")
 else:
     print("Erro ao buscar o paciente.")
